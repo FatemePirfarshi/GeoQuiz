@@ -3,6 +3,7 @@ package com.example.geoquiz.model;
 public class Question {
     private int mQuestionTextResId;
     private boolean mIsAnswerTrue;
+    private boolean mflag = true;
 
     public int getQuestionTextResId() {
         return mQuestionTextResId;
@@ -23,6 +24,14 @@ public class Question {
     public Question(int questionTextResId, boolean isAnswerTrue) {
         mQuestionTextResId = questionTextResId;
         mIsAnswerTrue = isAnswerTrue;
+    }
+
+    public boolean isMflag() {
+        return mflag;
+    }
+
+    public void setMflag(boolean mflag) {
+        this.mflag = mflag;
     }
 
     public Question() {
