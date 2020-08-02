@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mImageButtonFirst;
     private TextView mTextViewCount;
     private Button mButtonReset;
+    private LinearLayout mLinearLayoutMain;
+    private LinearLayout mLinearLayoutResult;
 
     private int counter = 0;
     private int mCurrentIndex = 0;
@@ -67,6 +70,8 @@ public class QuizActivity extends AppCompatActivity {
         mImageButtonFirst = findViewById(R.id.img_btn_first);
         mTextViewCount = findViewById(R.id.count);
         mButtonReset = findViewById(R.id.btn_reset);
+        mLinearLayoutMain = findViewById(R.id.main);
+        mLinearLayoutResult = findViewById(R.id.result);
     }
 
     private void setListeners() {
@@ -125,12 +130,15 @@ public class QuizActivity extends AppCompatActivity {
                 for (int i = 0; i < mQuestionBank.length; i++) {
                     mQuestionBank[i].setMflag(true);
                 }
+                mLinearLayoutMain.setVisibility(View.VISIBLE);
             }
         });
     }
 
     private void updateQuestion() {
-        if(state == mQuestionBank.length)
+        if(state == mQuestionBank.length){
+            mLinearLayoutMain.setVisibility(View.GONE);
+        }
 
         if (!mQuestionBank[mCurrentIndex].isMflag())
             disableAnswer(false);
