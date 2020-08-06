@@ -1,6 +1,10 @@
 package com.example.geoquiz.model;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
+
+    private static final long SeialVersionUID = 1L;
     private int mQuestionTextResId;
     private boolean mIsAnswerTrue;
     private boolean mflag = true;
@@ -31,6 +35,7 @@ public class Question {
     }
 
     public void setMflag(boolean mflag) {
+
         this.mflag = mflag;
     }
 
