@@ -8,6 +8,15 @@ public class Question implements Serializable {
     private int mQuestionTextResId;
     private boolean mIsAnswerTrue;
     private boolean mflag = true;
+    private boolean cheat = false;
+
+    public boolean isCheat() {
+        return cheat;
+    }
+
+    public void setCheat(boolean cheat) {
+        this.cheat = cheat;
+    }
 
     public int getQuestionTextResId() {
         return mQuestionTextResId;

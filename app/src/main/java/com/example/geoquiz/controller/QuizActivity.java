@@ -1,5 +1,6 @@
 package com.example.geoquiz.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geoquiz.R;
@@ -25,6 +27,10 @@ public class QuizActivity extends AppCompatActivity {
     public static final String KEY_SERIALIZABLE = "KEY_SERIALIZABLE";
     public static final String KEY_SCORE = "key Score";
     public static final String QUESTIONS_ARRAY = "questions_array";
+    public static final String EXTRA_QUESTION_ANSWER = "com.example.geoquiz.questionAnswer";
+    public static final int REQUEST_CODE_CHEAT = 0;
+
+
     private TextView mTextViewQuestion;
     private Button mButtonTrue;
     private Button mButtonFalse;
@@ -38,6 +44,7 @@ public class QuizActivity extends AppCompatActivity {
     private LinearLayout mLinearLayoutResult;
     private LinearLayout mLinearLayoutNext;
     private LinearLayout mLinearLayoutPrev;
+    private Button mButtonCheat;
 
     private int counter = 0;
     private int mCurrentIndex = 0;
@@ -140,6 +147,19 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode != Activity.RESULT_OK || data == null)
+            return;
+
+        if(requestCode == REQUEST_CODE_CHEAT) {
+            boolean mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEAT, false);
+            mQuestionBank[mCurrentIndex].setCheat(mIsCheater);
+        }
+    }
+
     private void findViews() {
         mTextViewQuestion = findViewById(R.id.txtview_question_text);
         mButtonTrue = findViewById(R.id.btn_true);
@@ -154,6 +174,7 @@ public class QuizActivity extends AppCompatActivity {
         mLinearLayoutResult = findViewById(R.id.result);
         mLinearLayoutNext = findViewById(R.id.next_linear);
         mLinearLayoutPrev = findViewById(R.id.prev_linear);
+        mButtonCheat = findViewById(R.id.btn_cheat);
     }
 
     private void setListeners() {
@@ -218,15 +239,26 @@ public class QuizActivity extends AppCompatActivity {
                     mTextViewQuestion.setVisibility(View.VISIBLE);
                     mLinearLayoutNext.setVisibility(View.VISIBLE);
                     mLinearLayoutPrev.setVisibility(View.VISIBLE);
+                    mButtonCheat.setVisibility(View.VISIBLE);
                 }
                 mButtonTrue.setEnabled(true);
                 mButtonFalse.setEnabled(true);
             }
         });
+
+        mButtonCheat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
+                intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
+
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
+            }
+        });
     }
 
     private void updateQuestion() {
-
+      // mIsCheater = false;
         if (!mQuestionBank[mCurrentIndex].isMflag())
             disableAnswer(false);
         else
@@ -238,13 +270,14 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void endScreen() {
-        if (state == mQuestionBank.length || flag == mQuestionBank.length ) {
+        if (state == mQuestionBank.length || flag == mQuestionBank.length) {
             mLinearLayoutMain.setVisibility(View.GONE);
 
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 mTextViewQuestion.setVisibility(View.GONE);
                 mLinearLayoutNext.setVisibility(View.GONE);
                 mLinearLayoutPrev.setVisibility(View.GONE);
+                mButtonCheat.setVisibility(View.GONE);
             }
 
         }
@@ -256,13 +289,18 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void checkAnswer(boolean userPressed) {
-        if (mQuestionBank[mCurrentIndex].isAnswerTrue() == userPressed) {
-            Toast.makeText(QuizActivity.this, R.string.toast_correct, Toast.LENGTH_LONG)
-                    .show();
-            mTextViewCount.setText("" + (++counter));
-        } else {
-            Toast.makeText(QuizActivity.this, R.string.toast_incorrect, Toast.LENGTH_LONG)
-                    .show();
+
+        if(mQuestionBank[mCurrentIndex].isCheat() == true)
+            Toast.makeText(this, R.string.toast_judgment, Toast.LENGTH_SHORT).show();
+
+        else {
+            if (mQuestionBank[mCurrentIndex].isAnswerTrue() == userPressed) {
+                Toast.makeText(QuizActivity.this, R.string.toast_correct, Toast.LENGTH_LONG)
+                        .show();
+                mTextViewCount.setText("" + (++counter));
+            } else
+                Toast.makeText(QuizActivity.this, R.string.toast_incorrect, Toast.LENGTH_LONG)
+                        .show();
         }
         mQuestionBank[mCurrentIndex].setMflag(false);
         disableAnswer(false);
