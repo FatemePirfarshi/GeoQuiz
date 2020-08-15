@@ -3,8 +3,10 @@ package com.example.geoquiz.controller;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geoquiz.R;
 import com.example.geoquiz.model.Question;
+import com.example.geoquiz.model.Setting;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -29,22 +32,18 @@ public class QuizActivity extends AppCompatActivity {
     public static final String QUESTIONS_ARRAY = "questions_array";
     public static final String EXTRA_QUESTION_ANSWER = "com.example.geoquiz.questionAnswer";
     public static final int REQUEST_CODE_CHEAT = 0;
+    public static final int REQUEST_CODE_setting = 1;
 
 
     private TextView mTextViewQuestion;
-    private Button mButtonTrue;
-    private Button mButtonFalse;
-    private ImageButton mImageButtonNext;
-    private ImageButton mImageButtonPrev;
-    private ImageButton mImageButtonLast;
-    private ImageButton mImageButtonFirst;
+    private Button mButtonTrue, mButtonFalse, mButtonReset, mButtonCheat, mButtonSetting;
+    private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonLast, mImageButtonFirst;
     private TextView mTextViewCount;
-    private Button mButtonReset;
     private LinearLayout mLinearLayoutMain;
     private LinearLayout mLinearLayoutResult;
     private LinearLayout mLinearLayoutNext;
     private LinearLayout mLinearLayoutPrev;
-    private Button mButtonCheat;
+    private LinearLayout mRootLayoutMain;
 
     private int counter = 0;
     private int mCurrentIndex = 0;
@@ -151,13 +150,37 @@ public class QuizActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode != Activity.RESULT_OK || data == null)
+        if (resultCode != Activity.RESULT_OK || data == null)
             return;
 
-        if(requestCode == REQUEST_CODE_CHEAT) {
+        if (requestCode == REQUEST_CODE_CHEAT) {
             boolean mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEAT, false);
             mQuestionBank[mCurrentIndex].setCheat(mIsCheater);
+
+        } else if (requestCode == REQUEST_CODE_setting) {
+
+            Setting changeSetting = new Setting();
+            changeSetting = (Setting) data.getSerializableExtra(SettingActivity.EXTRA_SETTING_OBJECT);
+            checkedSetting(changeSetting);
+//            mRootLayoutMain.setBackgroundColor
+//                    (Color.parseColor(data.getStringExtra(SettingActivity.EXTRA_COLOR_NUMBER)));
         }
+    }
+
+    private void checkedSetting(Setting setting) {
+
+        if (setting.isButtonTrue())
+            setHideButtons(mButtonTrue);
+
+        if (setting.isButtonFalse())
+            setHideButtons(mButtonFalse);
+
+        if(setting.isButtonCheat())
+            setHideButtons(mButtonCheat);
+    }
+
+    private void setHideButtons(Button btn) {
+        btn.setEnabled(false);
     }
 
     private void findViews() {
@@ -175,6 +198,8 @@ public class QuizActivity extends AppCompatActivity {
         mLinearLayoutNext = findViewById(R.id.next_linear);
         mLinearLayoutPrev = findViewById(R.id.prev_linear);
         mButtonCheat = findViewById(R.id.btn_cheat);
+        mButtonSetting = findViewById(R.id.btn_setting);
+        mRootLayoutMain = findViewById(R.id.root_layout_main);
     }
 
     private void setListeners() {
@@ -255,10 +280,19 @@ public class QuizActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_CHEAT);
             }
         });
+
+        mButtonSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuizActivity.this, SettingActivity.class);
+
+                startActivityForResult(intent, REQUEST_CODE_setting);
+            }
+        });
     }
 
     private void updateQuestion() {
-      // mIsCheater = false;
+        // mIsCheater = false;
         if (!mQuestionBank[mCurrentIndex].isMflag())
             disableAnswer(false);
         else
@@ -290,7 +324,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void checkAnswer(boolean userPressed) {
 
-        if(mQuestionBank[mCurrentIndex].isCheat() == true)
+        if (mQuestionBank[mCurrentIndex].isCheat() == true)
             Toast.makeText(this, R.string.toast_judgment, Toast.LENGTH_SHORT).show();
 
         else {

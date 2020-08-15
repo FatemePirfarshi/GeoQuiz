@@ -21,5 +21,22 @@
     <string name="button_show_answer">نمایش تقلب</string>
     <string name="button_cheat">تقلب</string>
     <string name="toast_judgment">تقلب کار خوبی نیست</string>
+    <string name="button_setting">تنظیمات</string>
+    <string name="textview_hide_or_show">فعال یا غیر فعال کردن دکمه ها:</string>
+    <string name="radio_button_prev">قبلی</string>
+    <string name="radio_button_next">بعدی</string>
+    <string name="radio_button_first">اولین</string>
+    <string name="radio_button_last">آخرین</string>
+    <string name="textview_change_size">تغییر سایز سوالات:</string>
+    <string name="textview_change_color">تغییر رنگ پیش زمینه:</string>
+    <string name="radio_button_small">کوچک</string>
+    <string name="radio_button_medium">متوسط</string>
+    <string name="radio_button_large">بزرگ</string>
+    <string name="backgrand_light_red">قرمز</string>
+    <string name="backgrand_light_blue">آبی</string>
+    <string name="backgrand_light_green">سبز</string>
+    <string name="backgrand_white">سفید</string>
+    <string name="button_save">ذخیره</string>
+    <string name="button_discard">انصراف</string>
 
 </resources>
