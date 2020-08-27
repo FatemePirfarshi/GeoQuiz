@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_cheat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        android:text="@string/button_cheat"
-        android:textColor="@android:color/background_dark"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btn_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:padding="24dp"
-        android:text="@string/reset" />
+    <ImageView
+        android:id="@+id/btn_setting"
+        android:layout_width="81dp"
+        android:layout_height="66dp"
+        android:layout_gravity="right"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_setting" />
 
     <LinearLayout
         android:id="@+id/main"
@@ -39,27 +28,45 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
-                android:text="@string/button_false"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_multiply" />
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:text="@string/button_true"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_double_tick" />
+
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_cheat"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_cheat"
+
+        android:layout_gravity="center"
+        android:layout_marginBottom="70dp"
+        android:text="@string/button_cheat"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:padding="24dp"
+        android:text="@string/reset" />
 
     <LinearLayout
         android:id="@+id/result"
@@ -99,21 +106,22 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/img_btn_prev"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="2dp"
-            app:srcCompat="@drawable/ic_arrow_right" />
+        android:id="@+id/img_btn_prev"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="2dp"
+        android:layout_gravity="bottom|right"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_chevron_right" />
 
         <ImageButton
             android:id="@+id/img_btn_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
             android:layout_margin="2dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_arrow_first" />
+            android:layout_gravity="bottom|right"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_chevron_first" />
 
     </LinearLayout>
 
@@ -126,19 +134,22 @@
 
         <ImageButton
             android:id="@+id/img_btn_last"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
             android:layout_margin="2dp"
-            app:srcCompat="@drawable/ic_arrow_last" />
+            android:layout_gravity="bottom|left"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_chevron_last" />
 
         <ImageButton
             android:id="@+id/img_btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="2dp"
-            app:srcCompat="@drawable/ic_arrow_left" />
+            android:layout_gravity="bottom|left"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_chevron_left" />
+
     </LinearLayout>
 
     <TextView
@@ -146,9 +157,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
         android:padding="8dp"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
+
 
 </FrameLayout>

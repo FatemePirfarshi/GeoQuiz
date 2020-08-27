@@ -9,14 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.SettingActivity"></activity>
-        <activity android:name=".controller.CheatActivity" />
-        <activity android:name=".controller.QuizActivity">
+        <activity android:name=".controller.activity.QuizListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".controller.SignupActivity" />
+        <activity android:name=".controller.LoginActivity" />
+        <activity android:name=".controller.SettingActivity" />
+        <activity android:name=".controller.activity.CheatActivity" />
+        <activity android:name=".controller.activity.QuizActivity">
         </activity>
     </application>
 

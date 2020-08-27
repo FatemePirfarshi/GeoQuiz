@@ -38,5 +38,20 @@
     <string name="backgrand_white">سفید</string>
     <string name="button_save">ذخیره</string>
     <string name="button_discard">انصراف</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="edittext_username">Username</string>
+    <string name="edittext_password">Password</string>
+    <string name="button_log_in">Log in</string>
+    <string name="button_sign_up">Sign up</string>
+    <string name="button_signup">Sign up</string>
+    <string name="edittext_signup_username">Username</string>
+    <string name="edittext_signup_password">Password</string>
+
+    <string name="empty_edittext_password">The item password cannot be empty</string>
+    <string name="empty_edittext_username">The item username cannot be empty</string>
+    <string name="invalid_info">Your information is not valid</string>
+    <string name="valid_info">You are LOG IN now</string>
 
 </resources>

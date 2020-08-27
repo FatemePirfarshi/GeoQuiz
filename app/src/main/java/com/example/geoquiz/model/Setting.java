@@ -10,6 +10,16 @@ public class Setting implements Serializable {
     private int questionSize;
     private String color;
 
+    private boolean save;
+
+    public boolean isSave() {
+        return save;
+    }
+
+    public void setSave(boolean save) {
+        this.save = save;
+    }
+
     public boolean isButtonTrue() {
         return buttonTrue;
     }

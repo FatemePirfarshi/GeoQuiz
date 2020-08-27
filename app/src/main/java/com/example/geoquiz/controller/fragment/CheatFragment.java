@@ -1,42 +1,51 @@
-package com.example.geoquiz.controller;
+package com.example.geoquiz.controller.fragment;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.geoquiz.R;
 
-import java.time.Instant;
-
-public class CheatActivity extends AppCompatActivity {
+public class CheatFragment extends Fragment {
 
     public static final String EXTRA_IS_CHEAT = "com.example.geoquiz.isCheat";
     public static final String KEY_PRESSED_CHEAT = "KEY_PRESSED_CHEAT";
+
     private TextView mTextViewAnswer;
     private Button mButtonShowAnswer;
 
     private boolean mIsAnswerTrue;
     private boolean pressedCheat = false;
 
+    public CheatFragment() {
+        // Required empty public constructor
+    }
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cheat);
 
-        mIsAnswerTrue = getIntent().getBooleanExtra(QuizActivity.EXTRA_QUESTION_ANSWER, false);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_cheat, container, false);
 
-        findViews();
+        mIsAnswerTrue = getActivity().getIntent().getBooleanExtra(QuizeDefaultFragment.EXTRA_QUESTION_ANSWER, false);
+
+        findViews(view);
 
         if (savedInstanceState != null) {
             if(savedInstanceState.getBoolean(KEY_PRESSED_CHEAT))
@@ -45,18 +54,21 @@ public class CheatActivity extends AppCompatActivity {
                 else
                     mTextViewAnswer.setText(R.string.button_false);
         }
+
         setListeners();
+        return view;
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_PRESSED_CHEAT,pressedCheat);
     }
 
-    private void findViews() {
-        mTextViewAnswer = findViewById(R.id.txtview_answer);
-        mButtonShowAnswer = findViewById(R.id.btn_show_answer);
+
+    private void findViews(View view) {
+        mTextViewAnswer = view.findViewById(R.id.txtview_answer);
+        mButtonShowAnswer = view.findViewById(R.id.btn_show_answer);
     }
 
     private void setListeners() {
@@ -78,6 +90,6 @@ public class CheatActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_IS_CHEAT, isCheet);
 
-        setResult(RESULT_OK, intent);
+        getActivity().setResult(Activity.RESULT_OK, intent);
     }
 }

@@ -42,9 +42,10 @@ public class SettingActivity extends AppCompatActivity {
         findViews();
         setListeners();
 
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_SETTING_OBJECT, mSetting);
-        setResult(RESULT_OK , intent);
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_SETTING_OBJECT, mSetting);
+            setResult(RESULT_OK, intent);
+
     }
 
     private void findViews() {
@@ -65,6 +66,22 @@ public class SettingActivity extends AppCompatActivity {
                 }
             });
         }
+
+        mButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSetting.setSave(true);
+                finish();
+            }
+        });
+
+        mButtonDiscard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSetting.setSave(false);
+                finish();
+            }
+        });
 
         mRadioGroupColor.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -92,16 +109,17 @@ public class SettingActivity extends AppCompatActivity {
 
     private void setColor(int id) {
         if (id == R.id.radio_btn_red)
-            setColor("#FFAFAF");
+            setSettingBackgrand("#FFAFAF");
         else if (id == R.id.radio_btn_blue)
-            setColor("#7FEDED");
+            setSettingBackgrand("#7FEDED");
         else if (id == R.id.radio_btn_green)
-            setColor("#B2FDB5");
+            setSettingBackgrand("#B2FDB5");
         else
-            setColor("#ffffff");
+            setSettingBackgrand("#ffffff");
     }
 
-    private void setColor(String color) {
+    private void setSettingBackgrand(String color) {
+        mSetting.setColor(color);
         mRootLayoutSetting.setBackgroundColor(Color.parseColor(color));
     }
 
